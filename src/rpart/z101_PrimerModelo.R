@@ -7,7 +7,7 @@ require("rpart")
 require("rpart.plot")
 
 # Aqui se debe poner la carpeta de la materia de SU computadora local
-setwd("X:\\gdrive\\labo2024v1\\") # Establezco el Working Directory
+setwd("/home/walarconcur/buckets/") # Establezco el Working Directory
 
 # cargo el dataset
 dataset <- fread("./datasets/dataset_pequeno.csv")
