@@ -201,7 +201,7 @@ TS_strategy_guantesblancos_202109 <- function( pmyexp, pinputexps, pserver="loca
 #   entreno en solo tres meses ( mas guantes blancos no se puede )
 #   y solo incluyo en el dataset al 5% de los CONTINUA
 
-TS_strategy_cv_202107 <- function( pmyexp, pinputexps, pserver="local")
+TS_strategy_xval_202107 <- function( pmyexp, pinputexps, pserver="local")
 {
   if( -1 == (param_local <- exp_init( pmyexp, pinputexps, pserver ))$resultado ) return( 0 )# linea fija
 
