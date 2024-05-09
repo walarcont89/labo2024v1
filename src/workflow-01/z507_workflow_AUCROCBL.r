@@ -185,7 +185,7 @@ TS_strategy_guantesblancos_202109 <- function( pmyexp, pinputexps, pserver="loca
   param_local$final_train <- c(202107, 202106, 202105, 202104, 202103, 202102, 202101, 202012, 202011)
 
 
-  param_local$train$training <- c(202105, 202104, 202103, 202102, 202101, 202012, 202011)
+  param_local$train$training <- c(202105, 202104, 202103, 202102, 202101, 202012, 202011, 202010, 202009)
   param_local$train$validation <- c(202106)
   param_local$train$testing <- c(202107)
 
@@ -269,7 +269,7 @@ HT_tuning_guantesblancos <- function( pmyexp, pinputexps, pserver="local")
 
     extra_trees = FALSE,
     # White Gloves Bayesian Optimization, with a happy narrow exploration
-    learning_rate = c( 0.01, 0.5 ),
+    learning_rate = c( 0.02, 0.5 ),
     feature_fraction = c( 0.5, 0.9 ),
     num_leaves = c( 8L, 2048L,  "integer" ),
     min_data_in_leaf = c( 100L, 2000L, "integer" )
@@ -328,7 +328,7 @@ HT_tuning_AUCROC <- function( pmyexp, pinputexps, pserver="local")
 
     extra_trees = FALSE,
     # White Gloves Bayesian Optimization, with a happy narrow exploration
-    learning_rate = c( 0.01, 0.5 ),
+    learning_rate = c( 0.02, 0.5 ),
     feature_fraction = c( 0.5, 0.9 ),
     num_leaves = c( 8L, 2048L,  "integer" ),
     min_data_in_leaf = c( 100L, 2000L, "integer" )
@@ -348,7 +348,7 @@ ZZ_final_guantesblancos <- function( pmyexp, pinputexps, pserver="local")
 {
   if( -1 == (param_local <- exp_init( pmyexp, pinputexps, pserver ))$resultado ) return( 0 )# linea fija
 
-  param_local$meta$script <- "/src/workflow-01/z571_ZZ_final.r"
+  param_local$meta$script <- "/src/workflow-01/z571_ZZ_final1.r"
 
   # Que modelos quiero, segun su posicion en el ranking e la Bayesian Optimizacion, ordenado por ganancia descendente
   param_local$modelos_rank <- c(1)
@@ -379,18 +379,18 @@ corrida_guantesblancos_202109_AUC <- function( pnombrewf, pvirgen=FALSE )
 {
   if( -1 == exp_wf_init( pnombrewf, pvirgen) ) return(0) # linea fija
 
-  DT_incorporar_dataset_default( "DT0901BL", "competencia_2024.csv.gz")
-  CA_catastrophe_default( "CA0901BL", "DT0901BL" )
+  DT_incorporar_dataset_default( "DT0901BLF", "competencia_2024.csv.gz")
+  CA_catastrophe_default( "CA0901BLF", "DT0901BLF" )
 
-  DR_drifting_guantesblancos( "DR0901BL", "CA0901BL" )
-  FE_historia_guantesblancos( "FE0901BL", "DR0901BL" )
+  DR_drifting_guantesblancos( "DR0901BLF", "CA0901BLF" )
+  FE_historia_guantesblancos( "FE0901BLF", "DR0901BLF" )
 
-  TS_strategy_guantesblancos_202109( "TS0901BL", "FE0901BL" )
+  TS_strategy_guantesblancos_202109( "TS0901BLF", "FE0901BLF" )
 
-  HT_tuning_AUCROC( "HT0901BL", "TS0901BL" )
+  HT_tuning_AUCROC( "HT0901BLF", "TS0901BLF" )
 
   # El ZZ depente de HT y TS
-  ZZ_final_guantesblancos( "ZZ0901BL", c("HT0901BL","TS0901BL") )
+  ZZ_final_guantesblancos( "ZZ0901BLF", c("HT0901BLF","TS0901BLF") )
 
 
   exp_wf_end( pnombrewf, pvirgen ) # linea fija
@@ -407,12 +407,12 @@ corrida_guantesblancos_202107_AUC <- function( pnombrewf, pvirgen=FALSE )
   if( -1 == exp_wf_init( pnombrewf, pvirgen) ) return(0) # linea fija
 
   # Ya tengo corrido FE0901 y parto de alli
-  TS_strategy_guantesblancos_202107( "TS0902BL", "FE0901BL" )
+  TS_strategy_guantesblancos_202107( "TS0902BLF", "FE0901BLF" )
 
-  HT_tuning_AUCROC( "HT0902BL", "TS0902BL" )
+  HT_tuning_AUCROC( "HT0902BLF", "TS0902BLF" )
 
   # El ZZ depente de HT y TS
-  ZZ_final_guantesblancos( "ZZ0902BL", c("HT0902BL", "TS0902BL") )
+  ZZ_final_guantesblancos( "ZZ0902BLF", c("HT0902BLF", "TS0902BLF") )
 
 
   exp_wf_end( pnombrewf, pvirgen ) # linea fija
@@ -423,11 +423,11 @@ corrida_guantesblancos_202107_AUC <- function( pnombrewf, pvirgen=FALSE )
 
 
 # Hago primero esta corrida que me genera los experimentos
-corrida_guantesblancos_202109_AUC( "gb01_AUCBL" )
+corrida_guantesblancos_202109_AUC( "gb01_AUCBLF" )
 
 
 # Luego partiendo de  FE0001
 
-corrida_guantesblancos_202107_AUC( "gb02_AUCBL" )
+corrida_guantesblancos_202107_AUC( "gb02_AUCBLF" )
 
  
