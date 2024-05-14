@@ -21,7 +21,7 @@ envg$EXPENV$datasets_dir <- "~/buckets/b1/datasets/"
 envg$EXPENV$arch_sem <- "mis_semillas.txt"
 
 # default
-envg$EXPENV$gcloud$RAM <- 64
+envg$EXPENV$gcloud$RAM <- 512
 envg$EXPENV$gcloud$cCPU <- 8
 
 #------------------------------------------------------------------------------
@@ -161,15 +161,19 @@ TS_strategy_baseline_202109 <- function( pmyexp, pinputexps, pserver="local")
 
 
   param_local$future <- c(202109)
-  param_local$final_train <- c(202107, 202106, 202105, 202104, 202103, 202102, 202101, 202012, 202011)
+  param_local$final_train <- c(202107, 202106, 202105, 202104, 202103, 202102, 
+                               202101, 202002, 202001, 201912, 201911, 201910, 
+                               201909)
 
 
-  param_local$train$training <- c(202105, 202104, 202103, 202102, 202101, 202012, 202011, 202010, 202009)
+  param_local$train$training <- c(202105, 202104, 202103, 202102, 202101, 202002, 
+                                  202001, 201912, 201911, 201910, 201909, 201908, 
+                                  201907)
   param_local$train$validation <- c(202106)
   param_local$train$testing <- c(202107)
 
   # undersampling  baseline
-  param_local$train$undersampling <- 0.2
+  param_local$train$undersampling <- 0.5
 
   return( exp_correr_script( param_local ) ) # linea fija
 }
@@ -184,15 +188,19 @@ TS_strategy_baseline_202107 <- function( pmyexp, pinputexps, pserver="local")
 
 
   param_local$future <- c(202107)
-  param_local$final_train <- c(202105, 202104, 202103, 202102, 202101, 202012, 202011, 202010, 202009)
+  param_local$final_train <- c(202105, 202104, 202103, 202102, 202101, 
+                               202002, 202001, 201912, 201911, 201910, 
+                               201909, 201908, 201907)
 
 
-  param_local$train$training <- c(202103, 202102, 202101, 202012, 202011, 202010, 202009, 202008, 202007)
+  param_local$train$training <- c(202103, 202102, 202101, 202002, 202001,
+                                  201912, 201911, 201910, 201909, 201908, 
+                                  201907, 201906, 201905)
   param_local$train$validation <- c(202104)
   param_local$train$testing <- c(202105)
 
   # undersampling  baseline
-  param_local$train$undersampling <- 0.2
+  param_local$train$undersampling <- 0.5
 
   return( exp_correr_script( param_local ) ) # linea fija
 }
@@ -241,10 +249,10 @@ HT_tuning_baseline <- function( pmyexp, pinputexps, pserver="local")
 
     extra_trees = FALSE,
     # Quasi  baseline, el minimo learning_rate es 0.02 !!
-    learning_rate = c( 0.02, 0.5 ),
+    learning_rate = c( 0.02, 0.8 ),
     feature_fraction = c( 0.5, 0.9 ),
     num_leaves = c( 8L, 2048L,  "integer" ),
-    min_data_in_leaf = c( 100L, 2000L, "integer" )
+    min_data_in_leaf = c( 10L, 10000L, "integer" )
   )
 
 
@@ -266,7 +274,7 @@ ZZ_final_baseline <- function( pmyexp, pinputexps, pserver="local")
   param_local$modelos_rank <- c(1)
 
   param_local$kaggle$envios_desde <-  9500L
-  param_local$kaggle$envios_hasta <- 11500L
+  param_local$kaggle$envios_hasta <- 14500L
   param_local$kaggle$envios_salto <-   500L
 
   # para el caso que deba graficar
@@ -292,7 +300,7 @@ ZZ_final_semillerio_baseline <- function( pmyexp, pinputexps, pserver="local")
   param_local$modelos_rank <- c(1)
 
   param_local$kaggle$envios_desde <-  9500L
-  param_local$kaggle$envios_hasta <- 11500L
+  param_local$kaggle$envios_hasta <- 14500L
   param_local$kaggle$envios_salto <-   500L
 
   # para el caso que deba graficar
